@@ -19,7 +19,8 @@ def get_attribute_list(page_soup, element):
     """Extracts a list of texts from specified elements."""
     try:
         attr_list = page_soup.select(element)
-        return [link.get_text(strip=True) for link in attr_list]
+        unique_attr_list = list(set(link.get_text(strip=True) for link in attr_list))
+        return unique_attr_list
     except (IndexError, AttributeError):
         return []
 
