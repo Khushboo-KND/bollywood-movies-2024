@@ -1,3 +1,4 @@
+"""This module contains helper functions for web scraping. Importing modules and defining functions."""
 from bs4 import BeautifulSoup
 import requests
 import json
@@ -16,10 +17,10 @@ def get_attributes(page_soup, element):
         return "NA"
 
 def get_attribute_list(page_soup, element):
-    """Extracts a list of texts from specified elements."""
+    """Extracts a list of unique texts from specified elements."""
     try:
         attr_list = page_soup.select(element)
-        unique_attr_list = list(set(link.get_text(strip=True) for link in attr_list))
+        unique_attr_list = list(set(link.get_text(strip=True) for link in attr_list)) # Remove duplicates
         return unique_attr_list
     except (IndexError, AttributeError):
         return []

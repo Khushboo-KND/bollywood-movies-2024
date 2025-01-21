@@ -1,14 +1,17 @@
+"""Scrapes IMDb movies and saves details to a CSV."""
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import time
 import pandas as pd
+"""Importing the necessary functions from the helper files"""
 from driver_utils import initialize_driver
 from helpers import get_soup, get_attributes, get_attribute_list, get_script_attribute
 from config import IMDB_URL, HEADERS
 
 def button_click(driver, xpath, i):
+    """Calculates the number of times to click the button and clicks it."""
     number_of_clicks = i // 50
     for _ in range(number_of_clicks):
         try:
@@ -46,6 +49,7 @@ def scrape_movies():
 
         sub_page_soup = get_soup(driver.current_url, HEADERS) #Get the movie details soup
         
+        """Extract the movie details"""
         movie_details = {
             "title": get_attributes(sub_page_soup, "span.hero__primary-text"),
             "duration": get_script_attribute(sub_page_soup, "duration"),
@@ -63,7 +67,7 @@ def scrape_movies():
             ),
         }
 
-        movie_list.append(movie_details)
+        movie_list.append(movie_details) #Append the movie details to the list
         driver.get(IMDB_URL)  # Go back to the main page
         time.sleep(2)
 
