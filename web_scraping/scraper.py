@@ -3,6 +3,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+import os
 import time
 import pandas as pd
 """Importing the necessary functions from the helper files"""
@@ -75,7 +76,8 @@ def scrape_movies():
 
     # Save to CSV
     df = pd.DataFrame(movie_list)
-    df.to_csv("imdb_movies.csv", index=False)
+    csv_file = os.path.join(os.getcwd(), "data", "imdb_movies.csv")
+    df.to_csv(csv_file, index=False)
     print("Scraping completed! Data saved to imdb_movies.csv")
 
 if __name__ == "__main__":
